@@ -1,0 +1,82 @@
+# Copyright Contributors to the Open Cluster Management project
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ .Values.org }}:{{ .Release.Name }}:clusterrole
+  labels:
+    app: {{ template "clusterbackup.name" . }}
+    chart: {{ template "clusterbackup.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ template "clusterbackup.name" . }}
+    helm.sh/chart: {{ template "clusterbackup.chart" . }}
+    component: clusterrole
+rules:
+- apiGroups:
+  - authentication.k8s.io
+  resources:
+  - tokenreviews
+  verbs:
+  - create
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - subjectaccessreviews
+  verbs:
+  - create
+rules:
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - backups
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - backups/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - backups/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - restores
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - restores/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - restores/status
+  verbs:
+  - get
+  - patch
+  - update

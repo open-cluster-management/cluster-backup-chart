@@ -1,6 +1,6 @@
 # Copyright Contributors to the Open Cluster Management project
 
-# Default values for cluster_backup-chart
+# Default values for cluster-backup-chart
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -17,6 +17,28 @@ global:
 hubconfig:
   nodeSelector: null
   replicaCount: 1
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 70
+      podAffinityTerm:
+        topologyKey: topology.kubernetes.io/zone
+        labelSelector:
+          matchExpressions:
+          - key: ocm-antiaffinity-selector
+            operator: In
+            values:
+            - clusterbackup
+    - weight: 35
+      podAffinityTerm:
+        topologyKey: kubernetes.io/hostname
+        labelSelector:
+          matchExpressions:
+          - key: ocm-antiaffinity-selector
+            operator: In
+            values:
+            - clusterbackup
 
 pullSecret: null
 arch:

@@ -27,7 +27,13 @@ rules:
   - subjectaccessreviews
   verbs:
   - create
-rules:
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - managedclusters
+  verbs:
+  - get
+  - list
 - apiGroups:
   - cluster.open-cluster-management.io
   resources:
@@ -80,3 +86,23 @@ rules:
   - get
   - patch
   - update
+- apiGroups:
+  - velero.io
+  resources:
+  - backups
+  verbs:
+  - create
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - velero.io
+  resources:
+  - restores
+  verbs:
+  - create
+  - get
+  - list
+  - update
+  - watch

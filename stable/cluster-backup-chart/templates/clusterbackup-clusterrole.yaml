@@ -14,31 +14,42 @@ metadata:
     app.kubernetes.io/name: {{ template "clusterbackup.name" . }}
     helm.sh/chart: {{ template "clusterbackup.chart" . }}
     component: clusterrole
+
 rules:
+
 - apiGroups:
   - authentication.k8s.io
   resources:
   - tokenreviews
   verbs:
   - create
+
 - apiGroups:
   - authorization.k8s.io
   resources:
   - subjectaccessreviews
   verbs:
   - create
-- apiGroups:
+
+- verbs:
+  - list
+  - get
+  apiGroups:
+  - ''
+  resources:
+  - secrets
+
+- verbs:
+  - get
+  - list
+  - watch
+  apiGroups:
   - cluster.open-cluster-management.io
   resources:
   - managedclusters
-  verbs:
-  - get
-  - list
-- apiGroups:
-  - cluster.open-cluster-management.io
-  resources:
-  - backups
-  verbs:
+  - channels
+
+- verbs:
   - create
   - delete
   - get
@@ -46,63 +57,51 @@ rules:
   - patch
   - update
   - watch
-- apiGroups:
-  - cluster.open-cluster-management.io
-  resources:
-  - backups/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - cluster.open-cluster-management.io
-  resources:
-  - backups/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
+  apiGroups:
   - cluster.open-cluster-management.io
   resources:
   - restores
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
+  - backups
+  - backupschedules
+
+- verbs:
   - update
-  - watch
-- apiGroups:
+  apiGroups:
   - cluster.open-cluster-management.io
   resources:
   - restores/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - cluster.open-cluster-management.io
-  resources:
-  - restores/status
-  verbs:
+  - backups/finalizers
+  - backupschedules/finalizers
+
+- verbs:
   - get
   - patch
   - update
-- apiGroups:
+  apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - restores/status
+  - backups/status
+  - backupschedules/status
+
+- verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+  apiGroups:
   - velero.io
   resources:
   - backups
-  verbs:
-  - create
-  - get
-  - list
-  - update
-  - watch
+  - restores
+  - schedules
+
 - apiGroups:
   - velero.io
   resources:
-  - restores
+  - deletebackuprequests
   verbs:
   - create
-  - get
-  - list
-  - update
-  - watch

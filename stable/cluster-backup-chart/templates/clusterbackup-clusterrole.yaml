@@ -39,15 +39,23 @@ rules:
   resources:
   - secrets
 
-- verbs:
+- apiGroups:
+  - apps.open-cluster-management.io
+  resources:
+  - channels
+  verbs:
   - get
   - list
   - watch
-  apiGroups:
+
+  - apiGroups:
   - cluster.open-cluster-management.io
   resources:
   - managedclusters
-  - channels
+  verbs:
+  - get
+  - list
+  - watch
 
 - verbs:
   - create
@@ -105,3 +113,5 @@ rules:
   - deletebackuprequests
   verbs:
   - create
+  - list
+  - watch

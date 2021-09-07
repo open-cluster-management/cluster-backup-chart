@@ -65,7 +65,7 @@ spec:
           operator: Exists
       containers:
       - name: cluster-backup
-        image: {{ .Values.global.imageOverrides.cluster_backup }}
+        image: {{ .Values.global.imageOverrides.cluster_backup_controller }}
         imagePullPolicy: {{ .Values.global.pullPolicy }}
         resources:
         {{- toYaml .Values.clusterbackup.resources | nindent 10 }}

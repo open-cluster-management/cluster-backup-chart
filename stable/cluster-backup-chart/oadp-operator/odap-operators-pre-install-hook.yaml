@@ -8,6 +8,8 @@ metadata:
   namespace: {{ .Values.oadpOperator.namespace }}
   annotations:
     "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/resource-policy": keep # hook resources that must never be deleted
 spec:
   channel: {{ .Values.oadpOperator.channel }}
   config:

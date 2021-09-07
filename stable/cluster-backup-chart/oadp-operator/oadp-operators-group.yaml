@@ -7,6 +7,10 @@ kind: OperatorGroup
 metadata:
   name: {{ .Values.oadpOperator.name }}-group
   namespace: {{ .Values.oadpOperator.namespace }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-2"
+    "helm.sh/resource-policy": keep # hook resources that must never be deleted
 spec:
   targetNamespaces:
   - {{ .Values.oadpOperator.namespace }}

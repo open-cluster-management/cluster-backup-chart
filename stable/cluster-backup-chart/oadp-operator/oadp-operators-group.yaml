@@ -1,0 +1,12 @@
+# Copyright Contributors to the Open Cluster Management project
+
+# creates the OADP Operator namespace group
+# All operator resources will be installed under the oadp-operator namespace
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: oadp-operators-group
+  namespace: oadp-operator
+spec:
+  targetNamespaces:
+  - oadp-operator

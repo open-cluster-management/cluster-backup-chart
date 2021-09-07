@@ -1,0 +1,19 @@
+# Copyright Contributors to the Open Cluster Management project
+
+# pre hook used to install the OADP Operator, using the oadp-operator namespace
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: oadp-operators-subscription
+  namespace: oadp-operator
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-1"
+spec:
+  channel: oadp-operator.v0.2.6
+  config:
+    resources: {}
+  installPlanApproval: Automatic
+  name: oadp-operators
+  source: community-operators
+  sourceNamespace: openshift-marketplace

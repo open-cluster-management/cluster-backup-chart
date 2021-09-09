@@ -58,5 +58,6 @@ oadpOperator:
   name: oadp-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  channel: oadp-operator.v0.2.6
-  namespace: oadp-operator
+  startingCSV: oadp-operator.v0.2.6
+  channel: alpha
+

@@ -5,13 +5,14 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: {{ .Values.oadpOperator.name }}-subscription
-  namespace: {{ .Values.oadpOperator.namespace }}
+  namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-1"
     "helm.sh/resource-policy": keep # hook resources that must never be deleted
 spec:
   channel: {{ .Values.oadpOperator.channel }}
+  startingCSV: {{ .Values.oadpOperator.startingCSV }}
   config:
     resources: {}
   installPlanApproval: Automatic

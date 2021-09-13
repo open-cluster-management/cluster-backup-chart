@@ -54,16 +54,15 @@ spec:
                 - {{ . }}
                 {{- end }}
         {{- with .Values.affinity }}
-        podAntiAffinity:
-  {{ toYaml . | indent 10 }}
+{{ toYaml . | indent 8 }}
       {{- end }}
       tolerations:
-        - key: dedicated
-          operator: Exists
-          effect: NoSchedule
-        - effect: NoSchedule 
-          key: node-role.kubernetes.io/infra 
-          operator: Exists
+      - key: dedicated
+        operator: Exists
+        effect: NoSchedule
+      - effect: NoSchedule 
+        key: node-role.kubernetes.io/infra 
+        operator: Exists
       containers:
       - name: cluster-backup
         image: {{ .Values.global.imageOverrides.cluster_backup_controller }}
@@ -81,7 +80,7 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.pullSecret }}
       {{- end }}
-      {{- with .Values.hubconfig.nodeSelector }}
+{{- with .Values.hubconfig.nodeSelector }}
       nodeSelector:
-      {{ toYaml . | indent 8 }}
-      {{- end }}
+{{ toYaml . | indent 8 }}
+{{- end }}

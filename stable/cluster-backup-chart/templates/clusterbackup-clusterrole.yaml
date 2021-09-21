@@ -32,25 +32,13 @@ rules:
   verbs:
   - create
 
-- apiGroups:
-  - rbac.authorization.k8s.io
-  resources:
-  - clusterrolebindings
-  verbs:
+- verbs:
   - create
-  - get
-  - list
-  - watch
-
-- apiGroups:
-  - rbac.authorization.k8s.io
+  - patch
+  apiGroups:
+  - ''
   resources:
-  - clusterroles
-  verbs:
-  - create
-  - get
-  - list
-  - watch
+  - events
 
 - verbs:
   - list
@@ -59,32 +47,6 @@ rules:
   - ''
   resources:
   - secrets
-
-- apiGroups:
-  - operator.openshift.io
-  resources:
-  - configs
-  verbs:
-  - get
-  - list
-  - watch
-
-- apiGroups:
-  - certificates.k8s.io
-  resources:
-  - certificatesigningrequests
-  verbs:
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - certificates.k8s.io
-  resources:
-  - certificatesigningrequests/approval
-  verbs:
-  - update
 
 - apiGroups:
   - apps.open-cluster-management.io

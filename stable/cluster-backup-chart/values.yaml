@@ -55,3 +55,9 @@ clusterbackup:
       cpu: "50m"
 
 
+oadpOperator:
+  name: oadp-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: oadp-operator.v0.5.3
+  channel: stable

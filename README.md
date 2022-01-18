@@ -22,7 +22,7 @@ Open Cluster Management cluster backup Helm chart
 Check the [CONTRIBUTING Doc](CONTRIBUTING.md) for how to contribute to the repo.
 
 ## Getting Started
-Cluster backup chart is a helm chart used for deploying the [Cluster backup operator](https://github.com/open-cluster-management/cluster-backup-operator). This is a guide on how to build and run open-cluster-management cluster-backup-chart.
+Cluster backup chart is a helm chart used for deploying the [Cluster backup operator](https://github.com/stolostron/cluster-backup-operator). This is a guide on how to build and run stolostron cluster-backup-chart.
 
 ## Prerequisite Tools
 
@@ -30,7 +30,7 @@ Cluster backup chart is a helm chart used for deploying the [Cluster backup oper
 
 ## Building for Development
 <pre>
-git clone https://github.com/open-cluster-management/cluster-backup-chart.git
+git clone https://github.com/stolostron/cluster-backup-chart.git
 cd cluster-backup-chart
 helm package stable/cluster-backup-chart
 </pre>
@@ -43,7 +43,7 @@ Make sure you are logged in using `oc`.
 export GITHUB_TOKEN=&lt;your github personal access token&gt;
 export GITHUB_USER=&lt;your github id&gt;
 cd ..
-git clone https://github.com/open-cluster-management/multiclusterhub-repo.git
+git clone https://github.com/stolostron/multiclusterhub-repo.git
 cd cluster-backup-chart
 cp cluster-backup-chart-&lt;version&gt;.tgz ../multiclusterhub-repo/multiclusterhub/charts
 cd ../multiclusterhub-repo

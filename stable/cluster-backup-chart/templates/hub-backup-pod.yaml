@@ -1,0 +1,169 @@
+# Copyright Contributors to the Open Cluster Management project
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  annotations:
+    "helm.sh/hook": pre-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+    policy.open-cluster-management.io/categories: PR.PT Protective Technology
+    policy.open-cluster-management.io/controls: PR.PT-3 Least Functionality
+    policy.open-cluster-management.io/standards: NIST-CSF
+  name: {{ .Values.BackupRestorePolicyName }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: acm-backup-pod-running
+        spec:
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: v1
+                kind: Pod
+                metadata:
+                  labels:
+                    app: {{ template "clusterbackup.name" . }}
+                  namespace: {{ .Release.Namespace }}
+                status:
+                  phase: Running
+          remediationAction: inform
+          severity: high
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: oadp-pod-running
+        spec:
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: v1
+                kind: Pod
+                metadata:
+                  annotations:
+                    repository: https://github.com/openshift/oadp-operator
+                  namespace: {{ .Values.OADPOperatorNamespace }}
+                status:
+                  phase: Running
+          remediationAction: inform
+          severity: high 
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: velero-pod-running
+        spec:
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: v1
+                kind: Pod
+                metadata:
+                  labels:
+                    app.kubernetes.io/name: velero
+                  namespace: {{ .Values.OADPOperatorNamespace }}
+                status:
+                  phase: Running
+          remediationAction: inform
+          severity: high
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: storagelocation-available
+        spec:
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: velero.io/v1
+                kind: BackupStorageLocation
+                metadata:
+                  namespace: {{ .Values.OADPOperatorNamespace }}
+                status:
+                  phase: Available
+          remediationAction: inform
+          severity: high 
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: acm-managed-clusters-schedule-backups-available
+        spec:
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: velero.io/v1
+                kind: Backup
+                metadata:
+                  namespace: {{ .Values.OADPOperatorNamespace }}
+                  labels:
+                    velero.io/schedule-name: acm-managed-clusters-schedule
+                status:
+                  phase: Completed
+          remediationAction: inform
+          severity: high 
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: acm-resources-schedule-backups-available
+        spec:
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: velero.io/v1
+                kind: Backup
+                metadata:
+                  namespace: {{ .Values.OADPOperatorNamespace }}
+                  labels:
+                    velero.io/schedule-name: acm-resources-schedule
+                status:
+                  phase: Completed
+          remediationAction: inform
+          severity: high                                                
+  remediationAction: inform
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  annotations:
+    "helm.sh/hook": pre-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+  name: {{ .Values.BackupRestorePolicyName }}
+  namespace: {{ .Release.Namespace }}
+placementRef:
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+  name: {{ .Values.BackupRestorePolicyName }}
+subjects:
+  - apiGroup: policy.open-cluster-management.io
+    kind: Policy
+    name: {{ .Values.BackupRestorePolicyName }}
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  annotations:
+    "helm.sh/hook": pre-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+  name: {{ .Values.BackupRestorePolicyName }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  clusterConditions:
+    - status: 'True'
+      type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - key: name
+        operator: In
+        values:
+          - local-cluster
+status:
+  decisions:
+    - clusterName: local-cluster
+      clusterNamespace: local-cluster

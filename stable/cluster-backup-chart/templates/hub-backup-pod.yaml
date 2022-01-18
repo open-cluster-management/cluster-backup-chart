@@ -75,7 +75,7 @@ spec:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
         metadata:
-          name: storagelocation-available
+          name: backup-storage-location-available
         spec:
           object-templates:
             - complianceType: musthave

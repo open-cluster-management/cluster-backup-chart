@@ -7,7 +7,7 @@ metadata:
     "helm.sh/hook": pre-install,post-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation
     policy.open-cluster-management.io/categories: PR.IP Information Protection Processes and Procedures
-    policy.open-cluster-management.io/controls: PR.IP-4 Backups of information are conducted, maintained, and tested
+    policy.open-cluster-management.io/controls: PR.IP-4 Backups of information are conducted maintained and tested
     policy.open-cluster-management.io/standards: NIST-CSF
   name: {{ .Values.BackupRestorePolicyName }}
   namespace: {{ .Release.Namespace }}

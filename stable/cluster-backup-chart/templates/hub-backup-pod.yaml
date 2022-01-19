@@ -6,8 +6,8 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install,post-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation
-    policy.open-cluster-management.io/categories: PR.PT Protective Technology
-    policy.open-cluster-management.io/controls: PR.PT-3 Least Functionality
+    policy.open-cluster-management.io/categories: PR.IP Information Protection Processes and Procedures
+    policy.open-cluster-management.io/controls: PR.IP-4 Backups of information are conducted, maintained, and tested
     policy.open-cluster-management.io/standards: NIST-CSF
   name: {{ .Values.BackupRestorePolicyName }}
   namespace: {{ .Release.Namespace }}
@@ -163,7 +163,3 @@ spec:
         operator: In
         values:
           - local-cluster
-status:
-  decisions:
-    - clusterName: local-cluster
-      clusterNamespace: local-cluster

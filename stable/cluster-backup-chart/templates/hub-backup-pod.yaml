@@ -9,6 +9,7 @@ metadata:
     policy.open-cluster-management.io/categories: PR.IP Information Protection Processes and Procedures
     policy.open-cluster-management.io/controls: PR.IP-4 Backups of information are conducted maintained and tested
     policy.open-cluster-management.io/standards: NIST-CSF
+    policy.open-cluster-management.io/source: system
   name: {{ .Values.BackupRestorePolicyName }}
   namespace: {{ .Release.Namespace }}
 spec:

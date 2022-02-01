@@ -3,6 +3,16 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
+  labels:
+    app: {{ template "clusterbackup.name" . }}
+    chart: {{ template "clusterbackup.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ template "clusterbackup.name" . }}
+    helm.sh/chart: {{ template "clusterbackup.chart" . }}
+    component: policy
   annotations:
     policy.open-cluster-management.io/categories: PR.IP Information Protection Processes and Procedures
     policy.open-cluster-management.io/controls: PR.IP-4 Backups of information are conducted maintained and tested

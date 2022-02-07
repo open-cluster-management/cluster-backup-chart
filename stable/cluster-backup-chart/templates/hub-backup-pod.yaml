@@ -56,7 +56,7 @@ spec:
                 metadata:
                   annotations:
                     repository: https://github.com/openshift/oadp-operator
-                  namespace: {{ .Values.OADPOperatorNamespace }}
+                  namespace: {{ .Release.Namespace }}
                 status:
                   phase: Running
           remediationAction: inform
@@ -75,7 +75,7 @@ spec:
                 metadata:
                   labels:
                     app.kubernetes.io/name: velero
-                  namespace: {{ .Values.OADPOperatorNamespace }}
+                  namespace: {{ .Release.Namespace }}
                 status:
                   phase: Running
           remediationAction: inform
@@ -92,7 +92,7 @@ spec:
                 apiVersion: velero.io/v1
                 kind: BackupStorageLocation
                 metadata:
-                  namespace: {{ .Values.OADPOperatorNamespace }}
+                  namespace: {{ .Release.Namespace }}
                 status:
                   phase: Available
           remediationAction: inform
@@ -109,7 +109,7 @@ spec:
                 apiVersion: velero.io/v1
                 kind: Backup
                 metadata:
-                  namespace: {{ .Values.OADPOperatorNamespace }}
+                  namespace: {{ .Release.Namespace }}
                   labels:
                     velero.io/schedule-name: acm-managed-clusters-schedule
                 status:
@@ -128,7 +128,7 @@ spec:
                 apiVersion: velero.io/v1
                 kind: Backup
                 metadata:
-                  namespace: {{ .Values.OADPOperatorNamespace }}
+                  namespace: {{ .Release.Namespace }}
                   labels:
                     velero.io/schedule-name: acm-resources-schedule
                 status:

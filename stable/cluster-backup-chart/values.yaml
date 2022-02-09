@@ -58,9 +58,9 @@ clusterbackup:
 BackupRestorePolicyName: backup-restore-enabled
 
 oadpOperator:
-  name: oadp-operator
+  name: redhat-oadp-operator
   channel: stable
   installPlanApproval: Automatic
-  source: community-operators
+  source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: oadp-operator.v0.5.6
+  startingCSV: oadp-operator.v1.0.0

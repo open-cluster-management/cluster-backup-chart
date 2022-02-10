@@ -50,19 +50,15 @@ spec:
               - key: beta.kubernetes.io/arch
                 operator: In
                 values:
-                {{- range .Values.arch }}
-                - {{ . }}
-                {{- end }}
-        {{- with .Values.affinity }}
-{{ toYaml . | indent 8 }}
-      {{- end }}
+                {{- toYaml .Values.arch | nindent 18 }}
+        {{- with .Values.affinity.podAntiAffinity }}
+        podAntiAffinity:
+        {{- toYaml . | nindent 10 }}
+        {{- end }}
+      {{- with .Values.hubconfig.tolerations }}
       tolerations:
-      - key: dedicated
-        operator: Exists
-        effect: NoSchedule
-      - effect: NoSchedule 
-        key: node-role.kubernetes.io/infra 
-        operator: Exists
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
       - name: cluster-backup
         image: {{ .Values.global.imageOverrides.cluster_backup_controller }}
@@ -80,7 +76,7 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.pullSecret }}
       {{- end }}
-{{- with .Values.hubconfig.nodeSelector }}
+      {{- with .Values.hubconfig.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
-{{- end }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}

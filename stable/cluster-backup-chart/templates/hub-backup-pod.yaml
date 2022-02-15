@@ -149,9 +149,50 @@ spec:
                 metadata:
                   namespace: {{ .Values.OADPOperatorNamespace }}
                 status:
-                  phase: {{ .Values.ClusterCollisionPhase }}
+                  phase: {{ .Values.ClusterCollisionPhase }}                                                            
           remediationAction: inform
-          severity: high                                                           
+          severity: high   
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: acm-backup-phase-validation
+        spec:
+          object-templates:
+            - complianceType: mustnothave
+              objectDefinition:
+                apiVersion: cluster.open-cluster-management.io/v1beta1
+                kind: BackupSchedule
+                metadata:
+                  namespace: {{ .Values.OADPOperatorNamespace }}
+                status:
+                  phase: FailedValidation 
+            - complianceType: mustnothave
+              objectDefinition:
+                apiVersion: cluster.open-cluster-management.io/v1beta1
+                kind: BackupSchedule
+                metadata:
+                  namespace: {{ .Values.OADPOperatorNamespace }}
+                status:
+                  phase: Failed 
+            - complianceType: mustnothave
+              objectDefinition:
+                apiVersion: cluster.open-cluster-management.io/v1beta1
+                kind: BackupSchedule
+                metadata:
+                  namespace: {{ .Values.OADPOperatorNamespace }}
+                status:
+                  phase: ""
+            - complianceType: mustnothave
+              objectDefinition:
+                apiVersion: cluster.open-cluster-management.io/v1beta1
+                kind: Restore
+                metadata:
+                  namespace: {{ .Values.OADPOperatorNamespace }}
+                status:
+                  phase: ""                                                             
+          remediationAction: inform
+          severity: high                                                                        
   remediationAction: inform
 ---
 apiVersion: policy.open-cluster-management.io/v1

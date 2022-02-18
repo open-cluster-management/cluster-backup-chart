@@ -65,4 +65,5 @@ clusterbackup:
 
 BackupRestorePolicyName: backup-restore-enabled
 OADPOperatorNamespace: openshift-adp
+ClusterCollisionPhase: BackupCollision
 

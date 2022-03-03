@@ -101,6 +101,23 @@ spec:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
         metadata:
+          name: backup-schedule-cron-enabled
+        spec:
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: velero.io/v1
+                kind: Backup
+                metadata:
+                  labels:
+                    velero.io/schedule-name: acm-validation-policy-schedule
+                  namespace: {{ .Values.OADPOperatorNamespace }}
+          remediationAction: inform
+          severity: high 
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
           name: acm-managed-clusters-schedule-backups-available
         spec:
           object-templates:

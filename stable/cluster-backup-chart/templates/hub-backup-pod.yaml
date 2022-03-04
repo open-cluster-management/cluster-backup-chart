@@ -112,6 +112,8 @@ spec:
                   labels:
                     velero.io/schedule-name: acm-validation-policy-schedule
                   namespace: {{ .Values.OADPOperatorNamespace }}
+                status:
+                  phase: Completed                  
           remediationAction: inform
           severity: high 
     - objectDefinition:

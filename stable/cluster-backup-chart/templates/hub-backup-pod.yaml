@@ -207,7 +207,15 @@ spec:
                 metadata:
                   namespace: {{ .Values.OADPOperatorNamespace }}
                 status:
-                  phase: ""                                                             
+                  phase: ""
+            - complianceType: mustnothave
+              objectDefinition:
+                apiVersion: cluster.open-cluster-management.io/v1beta1
+                kind: Restore
+                metadata:
+                  namespace: {{ .Values.OADPOperatorNamespace }}
+                status:
+                  phase: Error                                                       
           remediationAction: inform
           severity: high                                                                        
   remediationAction: inform

@@ -64,6 +64,13 @@ clusterbackup:
 
 
 BackupRestorePolicyName: backup-restore-enabled
-OADPOperatorNamespace: openshift-adp
 ClusterCollisionPhase: BackupCollision
+
+oadpOperator:
+  name: redhat-oadp-operator
+  channel: stable
+  installPlanApproval: Automatic
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: oadp-operator.v1.0.1
 

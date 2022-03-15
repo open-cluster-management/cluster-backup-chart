@@ -17,6 +17,7 @@ global:
 hubconfig:
   nodeSelector: null
   replicaCount: 1
+  proxyConfigs: {}
   tolerations:
     - key: dedicated
       operator: Exists

@@ -69,9 +69,9 @@ ClusterCollisionPhase: BackupCollision
 
 oadpOperator:
   name: redhat-oadp-operator
-  channel: stable
+  channel: stable-1.0
   installPlanApproval: Automatic
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: oadp-operator.v1.0.1
+  startingCSV: oadp-operator.v1.0.2
 

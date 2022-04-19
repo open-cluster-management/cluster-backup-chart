@@ -85,6 +85,21 @@ spec:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
         metadata:
+          name: data-protection-application-available
+        spec:
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: oadp.openshift.io/v1alpha1
+                kind: DataProtectionApplication
+                metadata:
+                  namespace: {{ .Release.Namespace }}
+          remediationAction: inform
+          severity: high
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
           name: backup-storage-location-available
         spec:
           object-templates:

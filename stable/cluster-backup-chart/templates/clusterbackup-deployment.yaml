@@ -72,9 +72,9 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: true
-      {{- if .Values.pullSecret }}
+      {{- if .Values.global.pullSecret }}
       imagePullSecrets:
-      - name: {{ .Values.pullSecret }}
+      - name: {{ .Values.global.pullSecret }}
       {{- end }}
       {{- with .Values.hubconfig.nodeSelector }}
       nodeSelector:

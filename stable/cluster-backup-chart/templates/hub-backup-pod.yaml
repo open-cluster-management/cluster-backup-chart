@@ -167,7 +167,24 @@ spec:
                 status:
                   phase: Completed
           remediationAction: inform
-          severity: high  
+          severity: high
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: acm-backup-in-progress-report
+        spec:
+          object-templates:
+            - complianceType: mustnothave
+              objectDefinition:
+                apiVersion: velero.io/v1
+                kind: Backup
+                metadata:
+                  namespace: {{ .Release.Namespace }}
+                status:
+                  phase: InProgress                                                            
+          remediationAction: inform
+          severity: medium
     - objectDefinition:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
